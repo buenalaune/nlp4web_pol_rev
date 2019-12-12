@@ -156,7 +156,8 @@ def exchange_words(text, tags, score_df, thresh):
 # Needs to be of same length and order as tags list
 # neg_words: A list of words which are to be inserted into a positive text.
 # Needs to be of same length and order as tags list
-def simple_exchange(text, sentiment, tags, pos_words, neg_words):
+def simple_exchange(
+        text, sentiment, tags, pos_words, neg_words, remove_not=False):
     # make dictionary of words to be exchanged
     exchange_dict = {
         0 : pos_words,
@@ -168,11 +169,19 @@ def simple_exchange(text, sentiment, tags, pos_words, neg_words):
 
     # Iterate over all tokens in the text
     for token in text:
+        # Check if token has tag which qualifies it for exchange
         if token.pos_ in tags:
+            # Exchange to given exchange token
             new_text.append(
                 exchange_dict[sentiment][tags.index(token.pos_)]
             )
 
+        # Check if token is 'not' and should be removed
+        elif (token.text == 'not') and remove_not:
+            # if yes, do nothing
+            pass
+
+        # If none of the above, append the token as it is to the new text
         else:
             new_text.append(token.text)
 
