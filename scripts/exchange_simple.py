@@ -24,7 +24,8 @@ with open('../evaluation_examples_word_ex_simple.csv', 'w') as file:
                     sentiment,
                     ['ADJ', 'ADV'],
                     ['good', 'well'],
-                    ['bad', 'badly']
+                    ['bad', 'badly'],
+                    remove_not=True
                 )
                 if not ('"' in t)
             )
