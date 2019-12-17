@@ -32,21 +32,6 @@ def calculate_polarity(test_file):
     model_name = './polarity_classifier.sav'
     prediction = classify(test_text, model_name)
     print("Here is the accuracy for polarity:", metrics.accuracy_score(prediction, labels_test) * 100, '%')
-    print('Correctly classified sentences:')
-
-    pos_correct = 0
-    neg_correct = 0
-    for i in range(len(test_text)):
-        if prediction[i] == labels_test[i]:
-            print(test_text[i], "prediction", "positive" if prediction[i] == 3  else "negative")
-            if labels_test[i] == 3:
-                pos_correct += 1
-            else:
-                neg_correct += 1
-
-    print('Number of correctly classified positive sentences:', pos_correct)
-    print('Number of correctly classified negative sentences:', neg_correct)
-
 
 
 if __name__ == '__main__':
