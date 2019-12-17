@@ -104,23 +104,28 @@ def make_scores(raw_df, num_tokens1, num_tokens0):
 
     return score_df
 
-
 # Function which takes a text and a df with word scores
 # and exchanges all words of a certain tag
 # and which are above / below a certain score threshold with an
 # 'opposing' word of proper score and tag
-def exchange_words(text, tags, score_df, thresh, simple=False):
+def exchange_words(
+        text,
+        tags,
+        score_df,
+        thresh,
+        simple=False,
+        pos_words=[],
+        neg_words=[]
+):
     # Empty list to store new (exchanged) token sequence
     new_text = []
 
     simple_exchange_dict = {
         'neg' : {
-            'ADJ' : 'bad',
-            'ADV' : 'badly'
+            tag : word for tag, word in zip(tags, neg_words)
         },
         'pos' : {
-            'ADJ' : 'good',
-            'ADV' : 'well'
+            tag : word for tag, word in zip(tags, neg_words)
         }
     }
 
