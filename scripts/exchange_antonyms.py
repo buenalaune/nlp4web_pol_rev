@@ -3,8 +3,10 @@ from nltk.corpus import wordnet
 
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 
-
-
+#Here is the accuracy for domain: 91.25 %
+#Here is the accuracy for polarity: 62.5 %
+#Number of correctly classified positive sentences: 78
+#Number of correctly classified negative sentences: 172
 
 tokenizer =TreebankWordDetokenizer()
 with  open("../evaluation_examples.csv") as in_file:
@@ -17,9 +19,9 @@ with  open("../evaluation_examples.csv") as in_file:
 
             tokens = nltk.word_tokenize(text)
             tokens_new = []
-            ignore_next = False
             for token in tokens:
                 new = token
+                # Replace token with its antonym (if available)
                 synsets = wordnet.synsets(token.lower())
                 for synset in synsets:
                     if token != new:
@@ -29,10 +31,9 @@ with  open("../evaluation_examples.csv") as in_file:
                         antonyms = lemma.antonyms()
                         if len(antonyms) != 0:
                             new = antonyms[0].name()
-                            print(token, new)
                             break
                 if new == token:
-                    # Not changed
+                    # No antonym was found. Try to find an antonym for similar words
                     for synset in synsets:
                         if token != new:
                             break
@@ -45,12 +46,8 @@ with  open("../evaluation_examples.csv") as in_file:
                                 antonyms = lemma.antonyms()
                                 if len(antonyms) != 0:
                                     new = antonyms[0].name()
-                                    print(token, new)
                                     break
 
                 tokens_new.append(new)
             text_new = tokenizer.detokenize(tokens_new).replace("\\\"","\"").replace("''","\"").replace("``","\"").replace("not not", "")
-
-
-
             out_file.write(text_new+","+domain+","+category)
