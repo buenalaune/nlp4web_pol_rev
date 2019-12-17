@@ -50,6 +50,8 @@ def make_extract_df(data, tags, model):
 # and returns a new dataframe with one row for each word with columns
 # 'word', 'tag' and 'score'
 # s = log(((f1+1)/num_tokens1)/((f0+1)/num_tokens0)) (log base 2)
+# score is positive when word appears more often in positive than
+# in negative texts
 # returns a dict with the words as keys and the scores as values
 def make_scores(raw_df, num_tokens1, num_tokens0):
     # Create empty df to store scores
@@ -107,37 +109,71 @@ def make_scores(raw_df, num_tokens1, num_tokens0):
 # and exchanges all words of a certain tag
 # and which are above / below a certain score threshold with an
 # 'opposing' word of proper score and tag
-def exchange_words(text, tags, score_df, thresh):
+def exchange_words(text, tags, score_df, thresh, simple=False):
     # Empty list to store new (exchanged) token sequence
     new_text = []
+
+    simple_exchange_dict = {
+        'neg' : {
+            'ADJ' : 'bad',
+            'ADV' : 'badly'
+        },
+        'pos' : {
+            'ADJ' : 'good',
+            'ADV' : 'well'
+        }
+    }
 
     # Iterate over input text
     for token in text:
         # Check if tag of current token is to be exchanged:
         if (token.pos_ in tags) and not token.is_punct:
-            # If yes, check if score is above or below threshold
-            score = float(score_df.loc[
-                              (score_df['word'] == token.text.lower())
-                              & (score_df['tag'] == token.pos_)
-                              ]['score'])
 
-            if abs(score) >= thresh:
-                # If yes, append token with same tag of 'opposite' score
-                # to new_text
-                # Make new dataframe of all exchange candidates
-                ex_df = score_df.loc[
-                    score_df['tag'] == token.pos_
-                    ].copy()
-                # Add new column to ex_df with values abs(((-1)*score)-ex_df.loc[<row>]['score'])
-                ex_df['score_comp'] = [
-                    abs(((-1) * score) - row.score) for row in ex_df.itertuples()
-                ]
+            try:
+                # If yes, check if score is above or below threshold
+                score = float(score_df.loc[
+                      (score_df['word'] == token.text.lower())
+                      & (score_df['tag'] == token.pos_)
+                ]['score'])
 
-                # Get the smallest value in column 'score_comp' and exchange
-                # the original word for this word
-                new_text.append(
-                    ex_df.sort_values('score_comp').iloc[0]['word']
-                )
+            # handle exception when combination of word and tag cannot be
+            # found in score_df
+            except TypeError:
+                score = 0
+
+            if abs(score) > thresh:
+
+                if not simple:
+                    # If yes, append token with same tag of 'opposite' score
+                    # to new_text
+                    # Make new dataframe of all exchange candidates
+                    ex_df = score_df.loc[
+                        score_df['tag'] == token.pos_
+                        ].copy()
+                    # Add new column to ex_df with values abs(((-1)*score)-ex_df.loc[<row>]['score'])
+                    ex_df['score_comp'] = [
+                        abs(((-1) * score) - row.score) for row in ex_df.itertuples()
+                    ]
+
+                    # Get the smallest value in column 'score_comp' and exchange
+                    # the original word for this word
+                    new_text.append(
+                        ex_df.sort_values('score_comp').iloc[0]['word']
+                    )
+
+                else:
+                    # If score is positive, append negative word and
+                    # vice versa
+
+                    if score > 0:
+                        new_text.append(
+                            simple_exchange_dict['neg'][token.pos_]
+                        )
+
+                    else:
+                        new_text.append(
+                            simple_exchange_dict['pos'][token.pos_]
+                        )
 
         else:
             # If token is not to be exchanged, append original token
