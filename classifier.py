@@ -38,7 +38,7 @@ def calculate_polarity(test_file):
     neg_correct = 0
     for i in range(len(test_text)):
         if prediction[i] == labels_test[i]:
-            print(test_text[i], "prediction", "positive" if prediction[i] == 3  else "negative")
+            #print(test_text[i], "prediction", "positive" if prediction[i] == 3  else "negative")
             if labels_test[i] == 3:
                 pos_correct += 1
             else:

@@ -74,14 +74,16 @@ for review_id in range(number_of_reviews):
     # new review after processing the old review    
     new_review = "{}".format(replace_tokens(review, toReplace, replacing))
 
-    # Insert nots
+    # Insert nots before every verb
     nlp_review = nlp(new_review)
     new_tokens = []
-    for txt in nlp_review:
-        new_tokens.append(txt.text)
-        if txt.pos_ in ['VERB', 'AUX']:
+    for i in range(len(nlp_review)):
+        if nlp_review[i].pos_ == 'VERB':
             new_tokens.append('not')
-    new_review = " ".join(new_tokens).replace('not not', '')
+        new_tokens.append(nlp_review[i].text)
+    new_review = ' '.join(new_tokens).replace('not not','')
+
+
 
 
     #adds the the list of new reviews
