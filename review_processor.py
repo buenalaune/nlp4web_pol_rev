@@ -22,7 +22,6 @@ def replace_tokens(sentence, toBeReplaced, toReplace):
         sentence = new_sentence
     return sentence
 
-
 number_of_reviews = len(df[0])
 reviews = []
 for review_id in range(number_of_reviews):
@@ -71,8 +70,19 @@ for review_id in range(number_of_reviews):
                 toReplace.append(txt.text)
                 replacing.append("good")
 
+
     # new review after processing the old review    
     new_review = "{}".format(replace_tokens(review, toReplace, replacing))
+
+    # Insert nots
+    nlp_review = nlp(new_review)
+    new_tokens = []
+    for txt in nlp_review:
+        new_tokens.append(txt.text)
+        if txt.pos_ in ['VERB', 'AUX']:
+            new_tokens.append('not')
+    new_review = " ".join(new_tokens).replace('not not', '')
+
 
     #adds the the list of new reviews
     reviews.append(new_review)
