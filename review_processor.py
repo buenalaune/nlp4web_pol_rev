@@ -8,9 +8,6 @@ nlp = spacy.load('en_core_web_lg')
 nlp.add_pipe(WordnetAnnotator(nlp.lang), after='tagger')
 df = pd.read_csv('evaluation_examples.csv', header=None) #names = ['review','domain','polarity']
 
-# verbs which influences the polarity of sentiment significantly
-verbs = ['regret', 'believe', 'dislike', 'like', 'recommend', 'waste', 'fail', 'love', 'disappoint', 'hate']
-
 # This functions replaces the tokens in the given sentence
 # 'sentence': where words shuld be replaced
 # 'toBeReplaced': list of tokens to be replaced
@@ -33,26 +30,7 @@ for review_id in range(number_of_reviews):
     replacing = []              # tokens which replaces
 
     for txt in nlp_review:
-        # checks if the token is verb which matters the sentiment polarity and finds its opposite verb
-        if txt.pos_ == 'VERB' and txt.lemma_ in verbs:
-            for syn in txt._.wordnet.synsets():
-                for l in syn.lemmas():
-                    if l.antonyms():
-                        toReplace.append(txt.text)
-                        replacing.append(l.antonyms()[0].name())
-
-        # if the opposite of verb is not in spacy wordnet, find the similarity score with "like" and "dislike"
-        # if the similarity score is closer to "like", verb is replaced with "dislike"
-        # if the similarity score is closer to "dislike", verb is replaced with "like"
-        if txt.pos_ == 'VERB' and txt.lemma_ in verbs and txt.text not in toReplace:
-            if txt.similarity(nlp("like")) > txt.similarity(nlp("dislike")):
-                toReplace.append(txt.text)
-                replacing.append("dislike")
-            else:
-                toReplace.append(txt.text)
-                replacing.append("like")
-
-        # it tries to find the opposite of tokens which are adjectives or adverbs
+         # it tries to find the opposite of tokens which are adjectives or adverbs
         if txt.pos_ in ['ADV','ADJ']:
             for syn in txt._.wordnet.synsets():
                 for l in syn.lemmas():
@@ -71,12 +49,22 @@ for review_id in range(number_of_reviews):
                 toReplace.append(txt.text)
                 replacing.append("good")
 
+
     # new review after processing the old review    
     new_review = "{}".format(replace_tokens(review, toReplace, replacing))
 
+    # Insert nots before every verb
+    nlp_review = nlp(new_review)
+    new_tokens = []
+    for i in range(len(nlp_review)):
+        if nlp_review[i].pos_ == 'VERB':
+            new_tokens.append('not')
+        new_tokens.append(nlp_review[i].text)
+    new_review = ' '.join(new_tokens).replace('not not','')
+
+
     #adds the the list of new reviews
     reviews.append(new_review)
-
 # replaces the review field in the dataframe
 df[0] = reviews
 
