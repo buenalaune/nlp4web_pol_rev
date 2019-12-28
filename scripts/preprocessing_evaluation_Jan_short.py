@@ -41,9 +41,9 @@ with open(test, 'w') as file:
             '"'
             + ' '.join(
                 t for t
-                in wpe.exchange_words(nlp(row.sentence), ['ADJ', 'ADV'], score_df, 0)
+                in wpe.exchange_words(nlp(row.sentence), ['ADJ', 'ADV'], score_df, 0, nlp)
                 if not ('"' in t)
-            )
+            ).replace('not not', '')
             + '",'
             + str(row.category) + ','
             + str(row.sentiment) + '\n'
@@ -68,12 +68,13 @@ with open(test, 'w') as file:
                     ['ADJ', 'ADV'],
                     score_df,
                     0,
+                    nlp,
                     simple=True,
                     pos_words=['good', 'well'],
                     neg_words=['bad', 'badly']
                 )
                 if not ('"' in t)
-            )
+            ).replace('not not', '')
             + '",'
             + str(row.category) + ','
             + str(row.sentiment) + '\n'
@@ -119,12 +120,13 @@ with open(test, 'w') as file:
                     ['ADJ', 'ADV'],
                     score_df,
                     0,
+                    nlp,
                     simple=True,
                     pos_words=pos_words,
                     neg_words=neg_words
                 )
                 if not ('"' in t)
-            )
+            ).replace('not not', '')
             + '",'
             + str(row.category) + ','
             + str(row.sentiment) + '\n'
@@ -135,36 +137,3 @@ print('''Evaluation of score-based exchange of adjectives and
 adverbs to highest/lowest score words''')
 classifier.calculate_domain(test)
 classifier.calculate_polarity(test)
-
-# Usage of the knowledge of the true class labels is forbidden. However,
-# the pre-trained classifier can be used to first predict the labels of
-# the test documents. These labels can then be used to exchange the
-# adjectives and adverbs according to the predicted class labels
-prediction = classifier.classify(
-    data['sentence'],
-    './polarity_classifier.sav'
-)
-
-test = '../out/evaluation_examples_pred_word_ex_simple.csv'
-
-with open(test, 'w') as file:
-    for i, row in enumerate(data.itertuples()):
-        sentiment = 1 if prediction[i] == 3 else 0
-        file.write(
-            '"'
-            + ' '.join(
-                t for t
-                in wpe.simple_exchange(
-                    nlp(row.sentence),
-                    sentiment,
-                    ['ADJ', 'ADV'],
-                    ['good', 'well'],
-                    ['bad', 'badly'],
-                    remove_not=True
-                )
-                if not ('"' in t)
-            )
-            + '",'
-            + str(row.category) + ','
-            + str(row.sentiment) + '\n'
-        )

@@ -113,6 +113,7 @@ def exchange_words(
         tags,
         score_df,
         thresh,
+        nlp,
         simple=False,
         pos_words=[],
         neg_words=[]
@@ -184,7 +185,17 @@ def exchange_words(
             # If token is not to be exchanged, append original token
             new_text.append(token.text)
 
-    return new_text
+        # Insert nots before every verb
+        nlp_review = nlp(' '.join(new_text))
+        new_tokens = []
+        for i in range(len(nlp_review)):
+            if nlp_review[i].pos_ == 'VERB':
+                new_tokens.append('not')
+            new_tokens.append(nlp_review[i].text)
+
+        # Remove "not not"
+
+    return new_tokens
 
 # Function which exchanges every word of a certain sentiment and tag
 # with a fixed word of opposite sentiment and the same tag
