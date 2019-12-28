@@ -7,5 +7,5 @@ and approach02).
 To do the classifications of the reviews generated with approach 1, change to
 "approach01/scripts/" and execute "python classification.py".
 
-To do the classification of the reviews generated with approach 1, change to
+To do the classification of the reviews generated with approach 2, change to
 "approach02/" and execute "python classifier_approach02.py".

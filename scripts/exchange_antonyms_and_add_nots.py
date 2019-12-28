@@ -1,14 +1,10 @@
-import nltk
-from nltk.corpus import wordnet
-
-from nltk.tokenize.treebank import TreebankWordDetokenizer
+import spacy
 
 # Here is the accuracy for domain: 91.25 %
 # Here is the accuracy for polarity: 50.24999999999999 %
 # Number of correctly classified positive sentences: 1
 # Number of correctly classified negative sentences: 200
 
-tokenizer = TreebankWordDetokenizer()
 with  open("../evaluation_examples.csv") as in_file:
     with open("../out.csv", "w") as out_file:
         for line in in_file:
@@ -17,13 +13,14 @@ with  open("../evaluation_examples.csv") as in_file:
             domain = split[-2]
             category = split[-1]
 
-            tokens = nltk.word_tokenize(text)
-            tags = nltk.pos_tag(tokens, tagset="universal")
+            nlp = spacy.load('en_core_web_sm')
+
+            tokens = nlp(line)
             tokens_new = []
-            for tup in tags:
-                token, tag = tup
+            for tup in tokens:
+                token = tup.text
                 new = token
-                synsets = wordnet.synsets(token.lower())
+                synsets = tup._.wordnet.synsets()
                 pos_tags = [synset.pos() for synset in synsets]
                 if len(pos_tags) != 0:
                     # Replace token with its antonym (if available)

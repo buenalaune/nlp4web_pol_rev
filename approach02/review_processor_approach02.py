@@ -21,7 +21,9 @@ def replace_tokens(sentence, toBeReplaced, toReplace):
 
 
 number_of_reviews = len(df[0])
-reviews = []
+reviews_not_after_verb = []
+reviews_not_before_verb = []
+reviews_between = []
 for review_id in range(number_of_reviews):
     review = ""
     review = df[0][review_id]   # single review
@@ -55,17 +57,45 @@ for review_id in range(number_of_reviews):
 
     # Insert nots before every verb
     nlp_review = nlp(new_review)
+
+    # Add nots before each verb
     new_tokens = []
     for i in range(len(nlp_review)):
         if nlp_review[i].pos_ == 'VERB':
             new_tokens.append('not')
         new_tokens.append(nlp_review[i].text)
+    # Remove 2 nots in a row
     new_review = ' '.join(new_tokens).replace('not not','')
+    # Adds the the list of new reviews
+    reviews_not_before_verb.append(new_review)
+
+    #Add nots after each verb
+    new_tokens = []
+    for i in range(len(nlp_review)):
+        new_tokens.append(nlp_review[i].text)
+        if nlp_review[i].pos_ == 'VERB':
+            new_tokens.append('not')
+    # Remove 2 nots in a row
+    new_review = ' '.join(new_tokens).replace('not not','')
+    # Adds the the list of new reviews
+    reviews_not_after_verb.append(new_review)
+
+    # Add nots between auxilary and verb
+    for i in range(len(nlp_review)-1):
+        new_tokens.append(nlp_review[i].text)
+        if nlp_review[i].pos_ == 'AUX' and nlp_review[i+1].pos_ == 'VERB':
+            new_tokens.append('not')
+    # Remove 2 nots in a row
+    new_review = ' '.join(new_tokens).replace('not not','')
+    # Adds the the list of new reviews
+    reviews_between.append(new_review)
 
 
-    #adds the the list of new reviews
-    reviews.append(new_review)
+
 # replaces the review field in the dataframe
-df[0] = reviews
-
-df.to_csv('new_reviews_approach02.csv', header=None, index=False)
+df[0] = reviews_between
+df.to_csv('new_reviews_approach02_between.csv', header=None, index=False)
+df[0] = reviews_not_before_verb
+df.to_csv('new_reviews_approach02_before.csv', header=None, index=False)
+df[0] = reviews_not_after_verb
+df.to_csv('new_reviews_approach02_after.csv', header=None, index=False)
