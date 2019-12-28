@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.5.20)  28 DEC 2019 22:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex 2019.5.20)  28 DEC 2019 22:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -282,99 +282,59 @@ File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `OT1/ptm/b/n' tried instead on input line 38.
 
-Underfull \hbox (badness 1337) in paragraph at lines 42--46
+Underfull \hbox (badness 1337) in paragraph at lines 42--43
 \OT1/ptm/m/n/10.95 peo-ple to ex-press their \OT1/ptm/m/it/10.95 opin-ions \OT1
 /ptm/m/n/10.95 to-wards cer-
  []
 
 
-Underfull \hbox (badness 1661) in paragraph at lines 48--51
-\OT1/ptm/m/n/10.95 sen-ti-ment in-for-ma-tion, while the nouns carry
- []
-
-
-Underfull \hbox (badness 1412) in paragraph at lines 48--51
-\OT1/ptm/m/n/10.95 Additionally, ``not'' was in-serted be-fore ev-ery
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 48--51
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 5504) has occurred while \output is active []
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <10.95> on input line 51.
-
-Underfull \hbox (badness 10000) in paragraph at lines 53--58
-
- []
-
-[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+(Font)              <10.95> on input line 57.
+ [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
 
 ]
 
 LaTeX Warning: No positions in optional float specifier.
-               Default added (so using `tbp') on input line 62.
+               Default added (so using `tbp') on input line 72.
 
 
-Underfull \hbox (badness 1400) in paragraph at lines 60--77
-\OT1/ptm/m/n/10.95 We mod-i-fied the pro-vided re-view texts us-ing
+Underfull \hbox (badness 1226) in paragraph at lines 83--84
+[]\OT1/ptm/m/n/10.95 The best-performing vari-a-tion of the score-
  []
 
 
-Underfull \hbox (badness 1796) in paragraph at lines 60--77
-\OT1/ptm/m/n/10.95 The mod-i-fied texts were then clas-si-fied with
- []
-
-
-Underfull \hbox (badness 2359) in paragraph at lines 60--77
+Underfull \hbox (badness 2359) in paragraph at lines 83--84
 \OT1/ptm/m/n/10.95 ``well''/``badly'' were de-ter-mined heuris-ti-cally).
  []
 
 
-Underfull \hbox (badness 2050) in paragraph at lines 60--77
-\OT1/ptm/m/n/10.95 with com-monly known sen-ti-ment con-no-ta-tion
- []
-
-
-Underfull \hbox (badness 1521) in paragraph at lines 60--77
-\OT1/ptm/m/n/10.95 best re-sults are prob-a-bly ob-tained by find-ing
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 60--77
-
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1442) has occurred while \output is active []
 
  [2]
 (./report.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 85.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 100.
  [3]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 85.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 100.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 85.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 85.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 100.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 100.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 85.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 100.
  )
 (\end occurred when \iffalse on line 351 was incomplete) 
 Here is how much of TeX's memory you used:
  6989 strings out of 494493
  103863 string characters out of 6174427
- 208449 words of memory out of 5000000
+ 202449 words of memory out of 5000000
  10599 multiletter control sequences out of 15000+600000
  19071 words of font info for 45 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 43i,15n,40p,1364b,323s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,14n,40p,1362b,320s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/tex
 mf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
@@ -384,10 +344,10 @@ mr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 ></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (3 pages, 95863 bytes).
+Output written on report.pdf (3 pages, 95938 bytes).
 PDF statistics:
- 77 PDF objects out of 1000 (max. 8388607)
- 63 compressed objects within 1 object stream
+ 78 PDF objects out of 1000 (max. 8388607)
+ 64 compressed objects within 1 object stream
  15 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
