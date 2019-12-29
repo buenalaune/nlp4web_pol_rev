@@ -36,6 +36,19 @@ def calculate_polarity(test_file):
 
 if __name__ == '__main__':
 
-    test = "./new_reviews_approach02.csv"
+    test = "./new_reviews_approach02_between.csv"
+    print("Results for adding the not between aux and verb")
+    calculate_domain(test)
+    calculate_polarity(test)
+
+    test = "./new_reviews_approach02_after.csv"
+    print()
+    print("Results for adding the not after the verb")
+    calculate_domain(test)
+    calculate_polarity(test)
+
+    test = "./new_reviews_approach02_before.csv"
+    print()
+    print("Results for adding the not before the verb")
     calculate_domain(test)
     calculate_polarity(test)
